@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">UKK</string>
+    <string name="app_campgear">CampGear</string>
+    <string name="cd_campgear_logo">CampGear Logo</string>
+
+    <!-- Login Strings -->
+    <string name="welcome_to_campgear">Welcome to CampGear</string>
+    <string name="login_subtitle">Login Untuk Melakukan Rental</string>
+    <string name="login_title">Login</string>
+    <string name="label_name_email">Name/Email</string>
+    <string name="label_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="cd_toggle_password">Toggle Password Visibility</string>
+
+    <!-- Beranda Strings -->
+    <string name="header_alat_camp">Alat-alat Camp</string>
+    <string name="cd_backpack">Backpack Icon</string>
+    <string name="item_populer">Item Populer</string>
+    <string name="see_all_items">See All Items &gt;</string>
+    <string name="cd_previous">Previous</string>
+    <string name="cd_next">Next</string>
+    <string name="cd_add">Add Item</string>
+    <string name="cd_home">Home Nav</string>
+    <string name="cd_profile">Profile Nav</string>
+
+    <!-- Profil Strings -->
+    <string name="header_profil">Profil</string>
+    <string name="label_name_placeholder">name</string>
+    <string name="label_alamat_placeholder">alamat</string>
+    <string name="label_nomor_telp_placeholder">nomor telp</string>
+    <string name="btn_logout">LogOut</string>
+    <string name="cd_profile_avatar">Profile Avatar</string>
+</resources>
