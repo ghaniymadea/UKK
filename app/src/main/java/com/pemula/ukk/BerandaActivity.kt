@@ -73,7 +73,7 @@ class BerandaActivity : AppCompatActivity() {
                     val imageUrl = when {
                         popularItem.imagePath.isNullOrEmpty() -> null
                         popularItem.imagePath.startsWith("http") -> popularItem.imagePath
-                        else -> "http://10.0.2.2:5162/${popularItem.imagePath.removePrefix("/")}"
+                        else -> "http://192.168.69.58:3001/${popularItem.imagePath.removePrefix("/")}"
                     }
 
                     if (imageUrl != null) {
@@ -90,6 +90,9 @@ class BerandaActivity : AppCompatActivity() {
                             putExtra("EXTRA_ALAT_PRICE", popularItem.hargaSewa)
                             putExtra("EXTRA_ALAT_STOCK", popularItem.stokTersedia)
                             putExtra("EXTRA_ALAT_IMAGE", imageUrl)
+                            putExtra("EXTRA_ALAT_KATEGORI_ID", popularItem.idKategori)
+                            putExtra("EXTRA_ALAT_KATEGORI", popularItem.kategori)
+                            putExtra("EXTRA_ALAT_DESKRIPSI", popularItem.deskripsi)
                         }
                         startActivity(intent)
                     }

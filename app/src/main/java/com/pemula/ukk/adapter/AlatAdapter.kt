@@ -41,7 +41,7 @@ class AlatAdapter(
         val imageUrl = when {
             alat.imagePath.isNullOrEmpty() -> null
             alat.imagePath.startsWith("http") -> alat.imagePath
-            else -> "http://10.0.2.2:5162/${alat.imagePath.removePrefix("/")}"
+            else -> "http://192.168.69.58:3001/${alat.imagePath.removePrefix("/")}"
         }
 
         if (imageUrl != null) {
@@ -77,6 +77,9 @@ class AlatAdapter(
                 putExtra("EXTRA_ALAT_PRICE", alat.hargaSewa)
                 putExtra("EXTRA_ALAT_STOCK", alat.stokTersedia)
                 putExtra("EXTRA_ALAT_IMAGE", imageUrl)
+                putExtra("EXTRA_ALAT_KATEGORI_ID", alat.idKategori)
+                putExtra("EXTRA_ALAT_KATEGORI", alat.kategori)
+                putExtra("EXTRA_ALAT_DESKRIPSI", alat.deskripsi)
             }
             context.startActivity(intent)
         }

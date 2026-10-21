@@ -8,9 +8,28 @@ object CartManager {
 
     fun addItem(alat: AlatResponse, qty: Int = 1) {
         if (itemsMap.containsKey(alat.id)) {
-            itemsMap[alat.id]?.quantity = (itemsMap[alat.id]?.quantity ?: 1) + qty
+            val currentQty = itemsMap[alat.id]?.quantity ?: 1
+            val newQty = currentQty + qty
+            if (newQty <= alat.stokTersedia) {
+                itemsMap[alat.id]?.quantity = newQty
+            } else {
+                itemsMap[alat.id]?.quantity = alat.stokTersedia
+            }
         } else {
-            itemsMap[alat.id] = CartItem(alat, qty)
+            val initialQty = if (qty <= alat.stokTersedia) qty else alat.stokTersedia
+            itemsMap[alat.id] = CartItem(alat, initialQty)
+        }
+    }
+
+    fun updateQuantity(alatId: Long, newQty: Int) {
+        if (newQty <= 0) {
+            itemsMap.remove(alatId)
+        } else {
+            itemsMap[alatId]?.let { item ->
+                if (newQty <= item.alat.stokTersedia) {
+                    item.quantity = newQty
+                }
+            }
         }
     }
 

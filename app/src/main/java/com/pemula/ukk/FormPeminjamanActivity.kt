@@ -1,19 +1,13 @@
 package com.pemula.ukk
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.pemula.ukk.controller.PeminjamanController
 import com.pemula.ukk.databinding.ActivityFormPeminjamanBinding
-import com.pemula.ukk.model.PeminjamanItemRequest
-import com.pemula.ukk.model.PeminjamanRequest
-import kotlinx.coroutines.launch
-import java.util.Calendar
-import java.util.Locale
+import com.pemula.ukk.model.AlatResponse
+import com.pemula.ukk.utils.CartManager
 
 class FormPeminjamanActivity : AppCompatActivity() {
 
@@ -24,7 +18,9 @@ class FormPeminjamanActivity : AppCompatActivity() {
     private var alatPrice: Double = 0.0
     private var alatStock: Int = 10
     private var alatImage: String? = null
-    private val peminjamanController = PeminjamanController()
+    private var alatKategoriId: Long = 0L
+    private var alatKategori: String? = null
+    private var alatDeskripsi: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -33,11 +29,18 @@ class FormPeminjamanActivity : AppCompatActivity() {
         binding = ActivityFormPeminjamanBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
         alatId = intent.getLongExtra("EXTRA_ALAT_ID", 1L)
         alatName = intent.getStringExtra("EXTRA_ALAT_NAME") ?: "Alat"
         alatPrice = intent.getDoubleExtra("EXTRA_ALAT_PRICE", 0.0)
         alatStock = intent.getIntExtra("EXTRA_ALAT_STOCK", 10)
         alatImage = intent.getStringExtra("EXTRA_ALAT_IMAGE")
+        alatKategoriId = intent.getLongExtra("EXTRA_ALAT_KATEGORI_ID", 0L)
+        alatKategori = intent.getStringExtra("EXTRA_ALAT_KATEGORI")
+        alatDeskripsi = intent.getStringExtra("EXTRA_ALAT_DESKRIPSI")
 
         binding.tvItemName.text = alatName
         binding.tvItemPrice.text = "Rp $alatPrice / hari"
@@ -64,66 +67,21 @@ class FormPeminjamanActivity : AppCompatActivity() {
             }
         }
 
-        // DatePicker for Tanggal Peminjaman
-        binding.etTanggalPeminjaman.setOnClickListener {
-            showDatePicker { dateStr ->
-                binding.etTanggalPeminjaman.setText(dateStr)
-            }
-        }
-
-        // DatePicker for Tanggal Pengembalian
-        binding.etTanggalPengembalian.setOnClickListener {
-            showDatePicker { dateStr ->
-                binding.etTanggalPengembalian.setText(dateStr)
-            }
-        }
-
         binding.btnAddRental.setOnClickListener {
-            val tanggalPeminjaman = binding.etTanggalPeminjaman.text.toString().trim()
-            val tanggalPengembalian = binding.etTanggalPengembalian.text.toString().trim()
-
-            if (tanggalPeminjaman.isEmpty()) {
-                Toast.makeText(this, "Pilih tanggal peminjaman", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (tanggalPengembalian.isEmpty()) {
-                Toast.makeText(this, "Pilih tanggal pengembalian", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val request = PeminjamanRequest(
-                tanggalPeminjaman = tanggalPeminjaman,
-                tanggalPengembalian = tanggalPengembalian,
-                items = listOf(
-                    PeminjamanItemRequest(
-                        idAlat = alatId,
-                        jumlah = quantity
-                    )
-                )
+            val alat = AlatResponse(
+                id = alatId,
+                idKategori = alatKategoriId,
+                kategori = alatKategori,
+                nama = alatName,
+                deskripsi = alatDeskripsi,
+                hargaSewa = alatPrice,
+                imagePath = alatImage,
+                stokTersedia = alatStock,
+                createdAt = null
             )
-
-            lifecycleScope.launch {
-                val success = peminjamanController.createPeminjaman(request)
-                if (success) {
-                    Toast.makeText(this@FormPeminjamanActivity, "Pengajuan Peminjaman Berhasil!", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    Toast.makeText(this@FormPeminjamanActivity, "Gagal mengajukan peminjaman", Toast.LENGTH_SHORT).show()
-                }
-            }
+            CartManager.addItem(alat, quantity)
+            Toast.makeText(this, "$alatName ($quantity) dimasukkan ke tas", Toast.LENGTH_SHORT).show()
+            finish()
         }
-    }
-
-    private fun showDatePicker(onDateSelected: (String) -> Unit) {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-            val formattedDate = String.format(Locale.US, "%d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
-            onDateSelected(formattedDate)
-        }, year, month, day).show()
     }
 }

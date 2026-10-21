@@ -10,6 +10,9 @@ interface AuthServices {
         @Body request: LoginRequest
     ): Response<LoginResponse>
 
+    @GET("auth/me")
+    suspend fun getProfile(): Response<UserResponse>
+
     @POST("auth/logout")
     suspend fun logout(
         @Header("Authorization") token: String? = null

@@ -30,11 +30,21 @@ class CartActivity : AppCompatActivity() {
         binding = ActivityCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        cartAdapter = CartAdapter(CartManager.getItems()) { item ->
-            CartManager.removeItem(item.alat.id)
-            cartAdapter.updateData(CartManager.getItems())
-            Toast.makeText(this, "${item.alat.nama} dihapus dari tas", Toast.LENGTH_SHORT).show()
+        binding.ivBack.setOnClickListener {
+            finish()
         }
+
+        cartAdapter = CartAdapter(
+            cartItems = CartManager.getItems(),
+            onQuantityChanged = {
+                // Quantity updated
+            },
+            onRemoveClick = { item ->
+                CartManager.removeItem(item.alat.id)
+                cartAdapter.updateData(CartManager.getItems())
+                Toast.makeText(this, "${item.alat.nama} dihapus dari tas", Toast.LENGTH_SHORT).show()
+            }
+        )
 
         binding.rvCartItems.apply {
             layoutManager = LinearLayoutManager(this@CartActivity)

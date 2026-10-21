@@ -18,10 +18,11 @@ object Client {
 
     private val authInterceptor = Interceptor { chain ->
         val original = chain.request()
+        val path = original.url.encodedPath
         val token = appContext?.getSharedPreferences("CampGearPrefs", Context.MODE_PRIVATE)
             ?.getString("token", null)
         val requestBuilder = original.newBuilder()
-        if (!token.isNullOrEmpty()) {
+        if (!token.isNullOrEmpty() && !path.contains("auth/login")) {
             requestBuilder.addHeader("Authorization", "Bearer $token")
         }
         chain.proceed(requestBuilder.build())
