@@ -66,7 +66,12 @@ class LoginActivity : AppCompatActivity() {
 
                         Toast.makeText(this@LoginActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
 
-                        val intent = Intent(this@LoginActivity, BerandaActivity::class.java)
+                        val role = result.user.role ?: ""
+                        val intent = when (role.lowercase()) {
+                            "admin" -> Intent(this@LoginActivity, BerandaAdminActivity::class.java)
+                            "petugas" -> Intent(this@LoginActivity, BerandaPetugasActivity::class.java)
+                            else -> Intent(this@LoginActivity, BerandaActivity::class.java)
+                        }
                         startActivity(intent)
                         finish()
 

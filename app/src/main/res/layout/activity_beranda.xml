@@ -75,41 +75,121 @@
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
-            <!-- Popular Item Banner Container -->
-            <RelativeLayout
-                android:id="@+id/rl_popular_banner"
+            <!-- Popular Items ViewFlipper Container (3 Items Auto-Slider) -->
+            <ViewFlipper
+                android:id="@+id/vf_popular_slider"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/bg_popular_card"
-                android:clickable="true"
-                android:focusable="true">
+                android:autoStart="true"
+                android:flipInterval="3000"
+                android:inAnimation="@android:anim/fade_in"
+                android:outAnimation="@android:anim/fade_out">
 
-                <ImageView
-                    android:id="@+id/iv_popular_image"
+                <!-- Slide 1 -->
+                <RelativeLayout
+                    android:id="@+id/rl_popular_banner_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:background="#D9D9D9"
-                    tools:ignore="ContentDescription" />
+                    android:background="@drawable/bg_popular_card"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                <TextView
-                    android:id="@+id/tv_popular_name"
+                    <ImageView
+                        android:id="@+id/iv_popular_image_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:background="#E8F5E9"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_popular_name_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="#991B4332"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp"
+                        android:text="Item Populer 1"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <!-- Slide 2 -->
+                <RelativeLayout
+                    android:id="@+id/rl_popular_banner_2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="#991B4332"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Item Populer"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_popular_card"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/iv_popular_image_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:background="#E8F5E9"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_popular_name_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="#991B4332"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp"
+                        android:text="Item Populer 2"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <!-- Slide 3 -->
+                <RelativeLayout
+                    android:id="@+id/rl_popular_banner_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_popular_card"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iv_popular_image_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:background="#E8F5E9"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tv_popular_name_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="#991B4332"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp"
+                        android:text="Item Populer 3"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </ViewFlipper>
 
             <!-- See All Items Section -->
             <TextView

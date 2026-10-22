@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardBackgroundColor="#F8FAF8"
+    app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="14dp"
     app:cardElevation="1dp">
 
@@ -20,7 +20,7 @@
             android:id="@+id/iv_cart_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="#E0E0E0"
+            android:background="#E8F5E9"
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
 

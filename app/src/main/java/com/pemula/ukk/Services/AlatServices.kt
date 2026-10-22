@@ -1,6 +1,8 @@
 package com.pemula.ukk.Services
 
 import com.pemula.ukk.model.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -13,9 +15,14 @@ interface AlatServices {
         @Query("idKategori") idKategori: Long? = null
     ): Response<PagedResult<AlatResponse>>
 
+    @Multipart
     @POST("alat")
     suspend fun postAlat(
-        @Body request: AlatRequest
+        @Part("idKategori") idKategori: RequestBody,
+        @Part("nama") nama: RequestBody,
+        @Part("deskripsi") deskripsi: RequestBody?,
+        @Part("hargaSewa") hargaSewa: RequestBody,
+        @Part gambar: MultipartBody.Part?
     ): Response<Unit>
 
     @GET("alat/{id}")
@@ -23,10 +30,15 @@ interface AlatServices {
         @Path("id") id: Long
     ): Response<AlatResponse>
 
+    @Multipart
     @PUT("alat/{id}")
     suspend fun putAlat(
         @Path("id") id: Long,
-        @Body request: AlatRequest
+        @Part("idKategori") idKategori: RequestBody,
+        @Part("nama") nama: RequestBody,
+        @Part("deskripsi") deskripsi: RequestBody?,
+        @Part("hargaSewa") hargaSewa: RequestBody,
+        @Part gambar: MultipartBody.Part?
     ): Response<Unit>
 
     @DELETE("alat/{id}")

@@ -1,6 +1,5 @@
 package com.pemula.ukk
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -49,7 +48,12 @@ class ProfilActivity : AppCompatActivity() {
 
         // Bottom Nav Home Click
         binding.ivNavHome.setOnClickListener {
-            val intent = Intent(this, BerandaActivity::class.java)
+            val role = sessionManager.getUserRole() ?: ""
+            val intent = when (role.lowercase()) {
+                "admin" -> Intent(this, BerandaAdminActivity::class.java)
+                "petugas" -> Intent(this, BerandaPetugasActivity::class.java)
+                else -> Intent(this, BerandaActivity::class.java)
+            }
             startActivity(intent)
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             finish()
@@ -77,8 +81,10 @@ class ProfilActivity : AppCompatActivity() {
         val name = sessionManager.getUserName()
         val alamat = sessionManager.getUserAlamat()
         val phone = sessionManager.getUserPhone()
+        val role = sessionManager.getUserRole() ?: ""
 
-        binding.tvProfileName.text = if (!name.isNullOrEmpty() && name != "name") name else "Peminjam CampGear"
+        val displayName = if (!name.isNullOrEmpty() && name != "name") name else "User CampGear"
+        binding.tvProfileName.text = if (role.isNotEmpty()) "$displayName ($role)" else displayName
         binding.tvProfileAlamat.text = if (!alamat.isNullOrEmpty() && alamat != "alamat" && alamat != "-") alamat else "Alamat belum diatur"
         binding.tvProfileTelp.text = if (!phone.isNullOrEmpty() && phone != "nomor telp") phone else "-"
     }

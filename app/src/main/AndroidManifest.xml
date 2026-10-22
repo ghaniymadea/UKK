@@ -51,6 +51,56 @@
             android:theme="@style/Theme.UKK.NoActionBar"
             android:exported="false" />
 
+        <activity
+            android:name=".BerandaAdminActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".BerandaPetugasActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageAlatActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageKategoriActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageUsersActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageUnitActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageLogsActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".PetugasApprovalActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".PetugasMonitorActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
+        <activity
+            android:name=".PetugasLaporanActivity"
+            android:theme="@style/Theme.UKK.NoActionBar"
+            android:exported="false" />
+
     </application>
 
 </manifest>

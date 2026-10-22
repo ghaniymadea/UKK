@@ -9,11 +9,28 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object Client {
-    private const val BASE_URL = "http://192.168.69.58:3001/api/v1/"
+    var BASE_URL = "http://192.168.69.95:3000/api/v1/"
     private var appContext: Context? = null
 
     fun initialize(context: Context) {
         appContext = context.applicationContext
+    }
+
+    fun getHostUrl(): String {
+        val clean = BASE_URL.removeSuffix("/")
+        return if (clean.endsWith("/api/v1")) {
+            clean.removeSuffix("/api/v1")
+        } else {
+            clean
+        }
+    }
+
+    fun getImageUrl(imagePath: String?): String? {
+        if (imagePath.isNullOrEmpty()) return null
+        if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) return imagePath
+        val host = getHostUrl()
+        val cleanPath = if (imagePath.startsWith("/")) imagePath else "/$imagePath"
+        return "$host$cleanPath"
     }
 
     private val authInterceptor = Interceptor { chain ->
@@ -29,57 +46,31 @@ object Client {
     }
 
     private val client = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(15, TimeUnit.SECONDS)
         .addInterceptor(authInterceptor)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
         .build()
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    val retrofitService: AuthServices by lazy {
-        retrofit.create(AuthServices::class.java)
+    private fun buildRetrofit(): Retrofit {
+        val validUrl = if (BASE_URL.endsWith("/")) BASE_URL else "$BASE_URL/"
+        return Retrofit.Builder()
+            .baseUrl(validUrl)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 
-    val alatService: AlatServices by lazy {
-        retrofit.create(AlatServices::class.java)
-    }
-
-    val kategoriService: KategoriServices by lazy {
-        retrofit.create(KategoriServices::class.java)
-    }
-
-    val peminjamanService: PeminjamanServices by lazy {
-        retrofit.create(PeminjamanServices::class.java)
-    }
-
-    val pengembalianService: PengembalianServices by lazy {
-        retrofit.create(PengembalianServices::class.java)
-    }
-
-    val unitAlatService: UnitAlatServices by lazy {
-        retrofit.create(UnitAlatServices::class.java)
-    }
-
-    val usersService: UsersServices by lazy {
-        retrofit.create(UsersServices::class.java)
-    }
-
-    val laporanService: LaporanServices by lazy {
-        retrofit.create(LaporanServices::class.java)
-    }
-
-    val logAktivitasService: LogAktivitasServices by lazy {
-        retrofit.create(LogAktivitasServices::class.java)
-    }
-
-    val statusBarangService: StatusBarangServices by lazy {
-        retrofit.create(StatusBarangServices::class.java)
-    }
+    val retrofitService: AuthServices get() = buildRetrofit().create(AuthServices::class.java)
+    val alatService: AlatServices get() = buildRetrofit().create(AlatServices::class.java)
+    val kategoriService: KategoriServices get() = buildRetrofit().create(KategoriServices::class.java)
+    val peminjamanService: PeminjamanServices get() = buildRetrofit().create(PeminjamanServices::class.java)
+    val pengembalianService: PengembalianServices get() = buildRetrofit().create(PengembalianServices::class.java)
+    val unitAlatService: UnitAlatServices get() = buildRetrofit().create(UnitAlatServices::class.java)
+    val usersService: UsersServices get() = buildRetrofit().create(UsersServices::class.java)
+    val laporanService: LaporanServices get() = buildRetrofit().create(LaporanServices::class.java)
+    val logAktivitasService: LogAktivitasServices get() = buildRetrofit().create(LogAktivitasServices::class.java)
+    val statusBarangService: StatusBarangServices get() = buildRetrofit().create(StatusBarangServices::class.java)
 }

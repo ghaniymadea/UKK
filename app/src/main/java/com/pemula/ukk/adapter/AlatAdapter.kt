@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pemula.ukk.FormPeminjamanActivity
 import com.pemula.ukk.R
+import com.pemula.ukk.Services.Client
 import com.pemula.ukk.model.AlatResponse
 import com.pemula.ukk.utils.CartManager
 
@@ -38,11 +39,7 @@ class AlatAdapter(
         holder.tvStock.text = "Stok: ${alat.stokTersedia}"
         holder.tvPrice.text = "Rp ${alat.hargaSewa} / hari"
 
-        val imageUrl = when {
-            alat.imagePath.isNullOrEmpty() -> null
-            alat.imagePath.startsWith("http") -> alat.imagePath
-            else -> "http://192.168.69.58:3001/${alat.imagePath.removePrefix("/")}"
-        }
+        val imageUrl = Client.getImageUrl(alat.imagePath)
 
         if (imageUrl != null) {
             Glide.with(holder.itemView.context)

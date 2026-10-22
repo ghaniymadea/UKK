@@ -14,10 +14,15 @@ class SplashActivity : AppCompatActivity() {
 
         val sessionManager = SessionManager(this)
         val token = sessionManager.getToken()
+        val role = sessionManager.getUserRole() ?: ""
 
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = if (!token.isNullOrEmpty()) {
-                Intent(this, BerandaActivity::class.java)
+                when (role.lowercase()) {
+                    "admin" -> Intent(this, BerandaAdminActivity::class.java)
+                    "petugas" -> Intent(this, BerandaPetugasActivity::class.java)
+                    else -> Intent(this, BerandaActivity::class.java)
+                }
             } else {
                 Intent(this, LoginActivity::class.java)
             }
